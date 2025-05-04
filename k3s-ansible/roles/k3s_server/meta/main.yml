@@ -38,7 +38,7 @@ argument_specs:
 
       kube_vip_arp:
         description: Enables kube-vip ARP broadcasts
-        default: true
+        default: false
         type: bool
 
       kube_vip_bgp:
