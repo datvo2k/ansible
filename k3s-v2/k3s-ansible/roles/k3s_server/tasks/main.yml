@@ -274,34 +274,34 @@
       delay: 10
       changed_when: false
 
-- name: Setup kubectl for user
-  when: user_kubectl
-  block:
-
-    - name: Create directory .kube
-      ansible.builtin.file:
-        path: ~{{ ansible_user }}/.kube
-        state: directory
-        owner: "{{ ansible_user }}"
-        mode: "u=rwx,g=rx,o="
-
-    - name: Copy config file to user home directory
-      ansible.builtin.copy:
-        src: /etc/rancher/k3s/k3s.yaml
-        dest: ~{{ ansible_user }}/.kube/config
-        remote_src: true
-        owner: "{{ ansible_user }}"
-        mode: "u=rw,g=,o="
-
-    - name: Configure default KUBECONFIG for user
-      ansible.builtin.lineinfile:
-        path: ~{{ ansible_user }}/.bashrc
-        regexp: 'export KUBECONFIG=~/.kube/config'
-        line: 'export KUBECONFIG=~/.kube/config # Added by k3s-ansible'
-        state: present
-
-    - name: Configure kubectl autocomplete
-      ansible.builtin.lineinfile:
-        path: ~{{ ansible_user }}/.bashrc
-        regexp: '\.\s+<\(kubectl completion bash\)'
-        line: ". <(kubectl completion bash)  # Added by k3s-ansible"
+#- name: Setup kubectl for user
+#  when: user_kubectl
+#  block:
+#
+#    - name: Create directory .kube
+#      ansible.builtin.file:
+#        path: ~{{ ansible_user }}/.kube
+#        state: directory
+#        owner: "{{ ansible_user }}"
+#        mode: "u=rwx,g=rx,o="
+#
+#    - name: Copy config file to user home directory
+#      ansible.builtin.copy:
+#        src: /etc/rancher/k3s/k3s.yaml
+#        dest: ~{{ ansible_user }}/.kube/k3s.yaml
+#        remote_src: true
+#        owner: "{{ ansible_user }}"
+#        mode: "u=rw,g=,o="
+#
+#    - name: Configure default KUBECONFIG for user
+#      ansible.builtin.lineinfile:
+#        path: ~{{ ansible_user }}/.bashrc
+#        regexp: 'export KUBECONFIG=~/.kube/config'
+#        line: 'export KUBECONFIG=~/.kube/config # Added by k3s-ansible'
+#        state: present
+#
+#    - name: Configure kubectl autocomplete
+#      ansible.builtin.lineinfile:
+#        path: ~{{ ansible_user }}/.bashrc
+#        regexp: '\.\s+<\(kubectl completion bash\)'
+#        line: ". <(kubectl completion bash)  # Added by k3s-ansible"
